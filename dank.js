@@ -1,6 +1,0 @@
-return (
-function(){
-    window.addEventListener('load', function() {
-	console.log(document.documentElement.outerHTML);
-    });
-})()
