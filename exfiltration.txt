@@ -1,1 +1,6 @@
-TODO: thorougly describe your attack!
+
+The attack relies upon the fact that when the chatmax client loads the messages, to convert from their JSON like format to text, they use a general purpose eval statement inside a function closure. Hence with this we can insert arbitrary code to execute on the receiving user's data.
+
+Thus the program "root_exfil.py". You have the username and password for a non-root user. Then you point it at a user whose messages you want to read, in this case root, as well as hostname nad port. The program sends a HTTP request to the server that uses your credentials to send a message to root (spoofed as coming from root with content 'hi' to help evade detection).
+
+Then when root logs on and reads their messages, they will have a new message. However when this code is getting evaluated, our code runs. There is a trick with putting quotes at the beginning and the end to get our code to run. The code will wait 1 second for the page to finish requesting the rest of the messages. Then it will extract the HTML of the root's chatmax page, then extract the root's message data from that. For each message, the root has, the code will send that message back to you. This is done per message to get around the max length requirements for the messaging system. Finally, once they have done that, you can check your inbox and read all of root's messages.

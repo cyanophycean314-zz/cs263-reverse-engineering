@@ -1,21 +1,21 @@
 Question 1. What are the decryption key(s)?
             Represent all binary data as hex strings.
 
-TODO
+3b99c216f1ae2dd69b70f5e800fc9aec
 
 Question 2: Are the keys above symmetric or asymmetric? What type of keys are
             they (e.g. RSA)?
 
-TODO
+The key is symmetric. They are for an AES-128 bit cipher.
 
 Question 3. Describe the reverse engineering methods by which you discovered the
             key(s).
 
-TODO
+I used objdump to investigate the assembly of proton and found out that the actual decryption of the database is called in libpassdb.so.1. I found the call to the AES128_ECB_decrypt in that file. This told me that this was most likely the AES cipher with a 128 bit key using the electronic codebook (ECB) mode. Then I ran gdb where I set a breakpoint on the AES128_ECB_decrypt function. After stepping inside the AES128_ECB_decrypt function, right before the keyexpansion function, I examined %eax which pointed to a memory location that gdb labeled extra_token which happened to be 16 bytes = 128 bits. I guessed that this was the key!
 
 Question 4. Describe the manner in which you actually decrypted the database.
             (note that your method of decryption should actually use the key
             obtained, and thus should not rely on running any function in
             libpassdb).
 
-TODO
+I went to http://aes.online-domain-tools.com/ and uploaded the password.db file, chose AES with ECB then typed in the hex key. Then it spit out the password database.
