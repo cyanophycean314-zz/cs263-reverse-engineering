@@ -37,10 +37,10 @@ def crack(username, hostname, port):
         request_url = 'http://{}:{}/${:018d}?pw={}&un={}'.format(hostname, port, random.randint(0, int(1e18)), convert_to_num(pw.strip()), un_num)
         r = requests.get(request_url, headers = headers)
         if r.status_code == requests.codes.ok:
-            return pw
+            return pw.strip()
         pws_tested += 1
-        if pws_tested % 200 == 0:
-            print(pws_tested)
+        #if pws_tested % 200 == 0:
+        #    print(pws_tested)
     return None
 
 # Do NOT change anything below (unless you are using Python 2, in which case

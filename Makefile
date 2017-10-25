@@ -47,7 +47,7 @@ test_cracker: assert_pyvers assert_nose assert_data_size cracker
 
 .PHONY: test_network_cracker
 test_network_cracker: assert_pyvers assert_nose assert_data_size
-	python3 -m nose $(NOSEFLAGS) tests/tests.py:test_cracker
+	python3 -m nose $(NOSEFLAGS) tests/tests.py:test_network_cracker
 
 .PHONY: assert_pyvers
 assert_pyvers:
